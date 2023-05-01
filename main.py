@@ -17,7 +17,7 @@ def get_db():
     return db
 
 #al final de cada solicitud va ejecutar los siguiente, es para seguridad para que se cierre
-@app.teardown_appcontext_
+@app.teardown_appcontext
 def close_connecion(exception):
     db = getattr(g, '_database', None)
     if db is not None:
@@ -46,3 +46,7 @@ def home():
     #terminamos haciendo un return
 
     return home_display
+
+#Ejecutar aplicación 
+if __name__ == '__main__':
+    app.run(debug = True) #cualquier cambio lo va a detectar
