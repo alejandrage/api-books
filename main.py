@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, jsonify
 import psycopg2 #aunque aparece resaltado esta bien instalado
 
 app = Flask(__name__)
@@ -46,6 +46,19 @@ def home():
     #terminamos haciendo un return
 
     return home_display
+
+#Para obtener todos los libros
+
+@app.route('/books',methods = ['GET'])
+def get_books():
+    conn = get_db() 
+    cursor = conn.cursor() 
+    cursor.execute("SELECT * FROM books_table") 
+    books = cursor.fetchall()
+
+    cursor.close()
+
+    return jsonify(books) #usamos json para que se vea bien
 
 #Ejecutar aplicación 
 if __name__ == '__main__':
